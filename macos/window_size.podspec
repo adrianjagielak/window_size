@@ -12,10 +12,12 @@ Allows resizing and repositioning the window containing Flutter.
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'Flutter Desktop Embedding Developers' => 'flutter-desktop-embedding-dev@googlegroups.com' }
   s.source           = { :path => '.' }
-  s.source_files     = 'Classes/**/*'
+  s.source_files     = 'window_size/Sources/**/*.{h,m,swift}'
+  s.public_header_files = 'window_size/Sources/window_size_objc/include/**/*.h'
   s.dependency 'FlutterMacOS'
 
   s.platform = :osx
-  s.osx.deployment_target = '10.11'
+  s.osx.deployment_target = '10.15'
+  s.swift_version = '5.0'
+  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
 end
-

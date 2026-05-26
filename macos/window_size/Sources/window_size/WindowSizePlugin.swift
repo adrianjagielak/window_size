@@ -15,6 +15,10 @@
 import FlutterMacOS
 import Foundation
 
+#if canImport(window_size_objc)
+  import window_size_objc
+#endif
+
 public class WindowSizePlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
     FLEWindowSizePlugin.register(with: registrar)

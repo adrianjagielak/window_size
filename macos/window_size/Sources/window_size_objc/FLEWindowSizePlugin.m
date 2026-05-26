@@ -16,29 +16,27 @@
 
 #import <AppKit/AppKit.h>
 
-namespace {
-
 // See window_size_channel.dart for documentation.
-NSString *const kChannelName = @"flutter/windowsize";
-NSString *const kGetScreenListMethod = @"getScreenList";
-NSString *const kGetWindowInfoMethod = @"getWindowInfo";
-NSString *const kSetWindowFrameMethod = @"setWindowFrame";
-NSString *const kSetWindowMinimumSizeMethod = @"setWindowMinimumSize";
-NSString *const kSetWindowMaximumSizeMethod = @"setWindowMaximumSize";
-NSString *const kSetWindowTitleMethod = @"setWindowTitle";
-NSString *const kSetWindowTitleRepresentedUrlMethod = @"setWindowTitleRepresentedUrl";
-NSString *const kSetWindowVisibilityMethod = @"setWindowVisibility";
-NSString *const kGetWindowMinimumSizeMethod = @"getWindowMinimumSize";
-NSString *const kGetWindowMaximumSizeMethod = @"getWindowMaximumSize";
-NSString *const kFrameKey = @"frame";
-NSString *const kVisibleFrameKey = @"visibleFrame";
-NSString *const kScaleFactorKey = @"scaleFactor";
-NSString *const kScreenKey = @"screen";
+static NSString *const kChannelName = @"flutter/windowsize";
+static NSString *const kGetScreenListMethod = @"getScreenList";
+static NSString *const kGetWindowInfoMethod = @"getWindowInfo";
+static NSString *const kSetWindowFrameMethod = @"setWindowFrame";
+static NSString *const kSetWindowMinimumSizeMethod = @"setWindowMinimumSize";
+static NSString *const kSetWindowMaximumSizeMethod = @"setWindowMaximumSize";
+static NSString *const kSetWindowTitleMethod = @"setWindowTitle";
+static NSString *const kSetWindowTitleRepresentedUrlMethod = @"setWindowTitleRepresentedUrl";
+static NSString *const kSetWindowVisibilityMethod = @"setWindowVisibility";
+static NSString *const kGetWindowMinimumSizeMethod = @"getWindowMinimumSize";
+static NSString *const kGetWindowMaximumSizeMethod = @"getWindowMaximumSize";
+static NSString *const kFrameKey = @"frame";
+static NSString *const kVisibleFrameKey = @"visibleFrame";
+static NSString *const kScaleFactorKey = @"scaleFactor";
+static NSString *const kScreenKey = @"screen";
 
 /**
  * Returns the max Y coordinate across all screens.
  */
-CGFloat GetMaxScreenY() {
+static CGFloat GetMaxScreenY() {
   CGFloat maxY = 0;
   for (NSScreen *screen in [NSScreen screens]) {
     maxY = MAX(maxY, CGRectGetMaxY(screen.frame));
@@ -50,7 +48,7 @@ CGFloat GetMaxScreenY() {
  * Given |frame| in screen coordinates, returns a frame flipped relative to
  * GetMaxScreenY().
  */
-NSRect GetFlippedRect(NSRect frame) {
+static NSRect GetFlippedRect(NSRect frame) {
   CGFloat maxY = GetMaxScreenY();
   return NSMakeRect(frame.origin.x, maxY - frame.origin.y - frame.size.height, frame.size.width,
                     frame.size.height);
@@ -60,15 +58,17 @@ NSRect GetFlippedRect(NSRect frame) {
  * Converts the channel representation for unconstrained maximum size `-1` to Cocoa's specific
  * maximum size of `FLT_MAX`.
  */
-double MaxDimensionFromChannelRepresentation(double size) { return size == -1.0 ? FLT_MAX : size; }
+static double MaxDimensionFromChannelRepresentation(double size) {
+  return size == -1.0 ? FLT_MAX : size;
+}
 
 /**
  * Converts Cocoa's specific maximum size of `FLT_MAX` to channel representation for unconstrained
  * maximum size `-1`.
  */
-double ChannelRepresentationForMaxDimension(double size) { return size == FLT_MAX ? -1 : size; }
-
-}  // namespace
+static double ChannelRepresentationForMaxDimension(double size) {
+  return size == FLT_MAX ? -1 : size;
+}
 
 @interface FLEWindowSizePlugin ()
 
